@@ -1,0 +1,102 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    
+<div class="row ml-3 mt-3" >
+
+    <div class="col-2">
+
+    <div class="card ml-3 mt-3" style="width: 18rem;">
+        <center>
+            <img class="card-img-top" src={% static "network/user.png" %} alt="Profile" style="width:200px;">
+            <p id="username">@{{ name }}</p>
+        </center>
+
+        {% if user.is_authenticated %}
+          {% if f %}
+          <center id='unfollow'>
+              <button class ="btn btn-dark btn-sm">UnFollow</button>
+          </center>
+          {% else %}
+          <center id='follow'>
+              <button class ="btn btn-outline-dark btn-sm">Follow</button>
+          </center>
+          {% endif %}
+        {% endif %}
+
+        <div class="card-body">
+            <a href="javascript:void(0);" data-toggle="modal" data-target="#exampleModal2">
+                <h5 id="f_info" class="card-title">Followers : {{ followers_count }}</h5>
+            </a>
+            <a href="javascript:void(0);"data-toggle="modal" data-target="#exampleModal">
+                <h5 class="card-title" >Following : {{ following_count }}</h5>
+            </a>
+        </div>
+    </div>
+
+    </div>
+
+   
+    <div class="col-10">
+
+    {% for post in profile_posts %}
+
+    <div class="card mt-3" style="margin-left:100px; margin-right:230px;">
+        <div class="card-body">
+            <a href="{% url 'profile' post.user %}">
+                <h6 class="card-subtitle mb-2">@{{post.user}}</h6>
+            </a>
+            <div class="card-text">{{post.content}}</div>
+            <p class="card-subtitle mb-1 mt-1 text-muted " >{{post.time}}</p>
+        </div>
+        </div>
+    {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- Modal for followers-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Followers</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      {% for fo in followers %}
+          <div class="modal-body">{{fo}}</div>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal for following-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Following</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      {% for f in following %}
+          <div class="modal-body">{{f}}</div>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+    <script src="{% static 'network/follow_unfollow.js' %}"></script>
+
+{% endblock %}

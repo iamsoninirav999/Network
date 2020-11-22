@@ -1,0 +1,71 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <div class="mr-5 ml-5 mt-4 card center">
+    <form class="card-body" id="post-form" method="POST"> 
+        <h5 class="card-title">Create Post</h5>
+        {% csrf_token %}
+        <input type="hidden" id="current" value="{{request.user}}">
+        <div class="row">
+            <div class="col-11">
+                <input autofocus id="content" name="content" type="text" class="form-control">
+            </div>
+            <div class="col-1" id="post_button">
+                <input type="submit" class="btn btn-primary" value="Post">
+            </div>
+            <div class="col-1" style="display:none;" id="edit_button" >
+                <input type="submit" class="btn btn-primary" value="Edit">
+            </div>
+        </div>
+    </form>
+    </div>
+    {% endif %}
+    
+    {% comment %} <div class="card ml-5 mt-3" style="width: 18rem;">
+        <center>
+            <img class="card-img-top" src="static/network/user.png" alt="Profile" style="width:200px;">
+        </center>
+        <div class="card-body">
+            <h5 class="card-title">Followers : </h5>
+            <h5 class="card-title">Following : </h5>
+        </div>
+    </div> {% endcomment %}
+    
+    <div id="posts">
+        {% comment %} <div class="card mt-3" style="margin-left:230px; margin-right:230px;">
+            <div class="card-body">
+                <a href="/">
+                    <h6 class="card-subtitle mb-2">@iamsoninirav999</h6>
+                </a>
+                <p class="card-text">Some Content By it self.......</p>
+                <p class="card-subtitle mb-2 text-muted" > 2020-09-09T12:48:59.849Z </p>
+                <span class="material-icons" style="font-size:29px;">favorite_border</span>
+            </div>
+        </div> {% endcomment %}
+    </div>
+
+{% comment %} {% if is_paginated %} {% endcomment %}
+    <div class="mt-2"style="margin-left:40%;">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                 
+                <li class="page-item ml-1"><a id="first" class="page-link" href="?page=1">First</a></li>
+            
+                <li class="page-item ml-1"><a id="previous" class="page-link" href="?page=1">Previous</a></li>
+            
+                <li class="page-item ml-1"><strong><a id="current_page" class="page-link" href="?page=1">1</a></strong></li>
+            
+                <li class="page-item ml-1"><a id="next"class="page-link" href="?page=1">Next</a></li>
+
+                <li class="page-item ml-1"><a id="last"class="page-link" href="?page=1">Last</a></li>
+
+            </ul>
+        </nav>
+    </div>
+{% comment %} {% endif %} {% endcomment %}
+
+    <script src="{% static 'network/send_post.js' %}"></script>
+    <script src="{% static 'network/get_post.js' %}"></script>
+{% endblock %}

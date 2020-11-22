@@ -1,0 +1,21 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+
+{% for post in following %}
+    <div class="card mt-3" style="margin-left:230px; margin-right:230px;">
+        <div class="card-body">
+            <a href="{% url 'profile' post.user %}">
+                <h6 class="card-subtitle mb-2">@{{post.user}}</h6>
+            </a>
+            <p class="card-text">{{post.content}}</p>
+            <p class="card-subtitle mb-2 text-muted" >{{post.time}}</p>
+            {% comment %} <span class="material-icons" style="font-size:29px;">favorite_border</span> {% endcomment %}
+        </div>
+    </div>
+{% endfor %}
+
+
+{% endblock %}
